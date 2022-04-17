@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Title from '../components/title';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <View>
       <Title />
@@ -13,7 +13,7 @@ const Home = () => {
           resizeMode="contain"
         />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Quiz')}>
         <Text>Click...</Text>
       </TouchableOpacity>
     </View>
