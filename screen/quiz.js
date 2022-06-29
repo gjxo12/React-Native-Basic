@@ -1,44 +1,52 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useState} from 'react/cjs/react.development';
-import {useEffect} from 'react/cjs/react.production.min';
+import {useState} from 'react';
+import {useEffect} from 'react';
 
-const Quiz = navigation => {
-  const [question, setQustion] = useState();
-  const getquiz = async () => {};
+const Quiz = ({navigation}) => {
+  const [questions, setQustions] = useState();
+  const [ques, setQues] = useState(0);
+  const getquiz = async () => {
+    const url = 'https://opentdb.com/api.php?amount=10&type=multiple';
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.results);
+    setQustions(data.results);
+  };
   useEffect(() => {
     getquiz();
   }, []);
   return (
     <View style={styles.container}>
-      <View style={styles.top}>
-        <Text style={styles.question}>Image Select.,...</Text>
-      </View>
-      <View style={styles.options}>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}>option1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}>option2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}>option3</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}>option4</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.bottom}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Skip</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>End</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
+      {questions && (
+        <View style={styles.parent}>
+          <View style={styles.top}>
+            <Text style={styles.question}>Image Select.,...</Text>
+          </View>
+          <View style={styles.options}>
+            <TouchableOpacity style={styles.optionButton}>
+              <Text style={styles.option}>option1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionButton}>
+              <Text style={styles.option}>option2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionButton}>
+              <Text style={styles.option}>option3</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionButton}>
+              <Text style={styles.option}>option4</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.bottom}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Skip</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -95,5 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#184277',
     paddingHorizontal: 12,
     borderRadius: 12,
+  },
+  parent: {
+    height: '100%',
   },
 });
